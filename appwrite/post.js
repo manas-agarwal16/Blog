@@ -1,7 +1,7 @@
 import { Client, Storage, Databases , ID, Query} from "appwrite";
 import conf from "../conf/conf";
 
-class FileUploader {
+class Post {
     client;
     storage;
     databases;
@@ -157,5 +157,5 @@ class FileUploader {
     }
 }
 
-export const fileUploader = new FileUploader();
+export const post = new Post();
 

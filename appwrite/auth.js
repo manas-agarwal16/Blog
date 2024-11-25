@@ -2,7 +2,7 @@ import {Client , Account , ID} from "appwrite";
 import conf from "../conf/conf.js";
 
 class AuthServices{
-    client ;
+    client;
     account;
     constructor() {
         this.client = new Client().setEndpoint(conf.appwriteEndPoint) // Replace with your Appwrite endpoint
@@ -12,7 +12,6 @@ class AuthServices{
     }
 
     async createAccount({name , email , password}){
-        
         try {
            const user =  await this.account.create(ID.unique(), email, password , name);
            if(user){
@@ -36,15 +35,11 @@ class AuthServices{
 
     async currentUser(){
         try {
-            const user = this.account.get();
-            if(message in user){ //"message": "Unauthorized. No active session.";
-                return "No active user";
-            }
+            const user = await this.account.get();
             return user;
         } catch (error) {
-            console.log("appwrite error in currentUser function" , error);
-            throw error;
-            
+            console.log("No active user");
+            return false;
         }
     }
 
@@ -56,6 +51,6 @@ class AuthServices{
             console.error('Error logging out from all sessions:', error);
         }
     }
-
-
 }
+
+export const authService = new AuthServices();
