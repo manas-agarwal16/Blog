@@ -38,13 +38,25 @@ class PostService {
     }
   }
 
-  async updatePost(slug, { title, content, status }) {
+  async updatePost(id, { title, slug , content, status, file }) {
     try {
+      if (file) {
+        let FileURL = await this.uploadFile(file).URL;
+        const updateImage = await this.databases.updateDocument(
+          conf.databaseId,
+          conf.articleCollectionId,
+          id,
+          {
+            FileURL,
+          }
+        );
+      }
       const updatedPost = await this.databases.updateDocument(
         conf.databaseId,
         conf.articleCollectionId,
-        slug,
+        id,
         {
+          slug,
           title,
           content,
           status,
@@ -66,7 +78,6 @@ class PostService {
         Query.equal("status", "active")
       );
       console.log(`All posts fetched successfully`);
-
       return allPosts;
     } catch (error) {
       console.log(`Error in fetching all posts ${error}`);
@@ -74,7 +85,7 @@ class PostService {
     }
   }
 
-  async getPost({ slug }) {
+  async getPost(slug) {
     try {
       const post = await this.databases.getDocument(
         conf.databaseId,

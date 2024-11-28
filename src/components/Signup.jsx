@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { authService } from '../appwrite/auth';
+import { authServices } from '../appwrite/auth';
 import { Link , useNavigate } from 'react-router-dom';
 import { Input } from './Input';
 import {Button, Logo} from "./index";
@@ -9,9 +9,6 @@ import { useRef } from 'react';
 
 const Signup = () => {
 
-    const nameRef = useRef();
-    const emailRef = useRef();
-    const passwordRef = useRef();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {register, handleSubmit , formState : {errors}} = useForm();
@@ -19,9 +16,9 @@ const Signup = () => {
     const signUp = async (data) => {
         console.log("signUp data : " , data);
         try {
-           const create = await authService.createAccount(data);
+           const create = await authServices.createAccount(data);
            if(create){
-            await authService.login(data)
+            await authServices.login(data)
             dispatch(login(data))
             navigate("/");
            }
@@ -45,7 +42,7 @@ const Signup = () => {
             <div>
               <Input
                 {...register("name" , {required : true})}
-                ref={nameRef}
+                // ref={nameRef} u dont explicity need to pass the ref. react-hook-form automatically do that for u
                 label="Name"
                 placeholder="Enter your name"
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
@@ -63,7 +60,6 @@ const Signup = () => {
                         message: "Please enter a valid email address",
                       },
                 })}
-                ref={emailRef}
                 label="Enter email"
                 placeholder="email" 
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
@@ -76,7 +72,6 @@ const Signup = () => {
             <div>
               <Input
                 {...register("password" , {required : true})}
-                ref={passwordRef}
                 label="password"
                 placeholder="password"
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"

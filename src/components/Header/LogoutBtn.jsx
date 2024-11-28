@@ -1,14 +1,14 @@
 import React from "react";
-import { login, logout } from "../../store/slices/authSlice";
-import { useDispatch, useSelector } from "react-redux";
-import authService from "../../appwrite/auth";
+import { logout } from "../../store/slices/authSlice";
+import { useDispatch } from "react-redux";
+import authServices from "../../appwrite/auth";
 const LogoutBtn = () => {
   const dispatch = useDispatch();
 
   function logoutHandler() {
-    authService.logout().then(() => dispatch(logout()));
+    authServices.logout().then(() => dispatch(logout()));
 
-    // authService contain async op. so return promises. 
+    // authServices contain async op. so return promises. 
 
   }
 

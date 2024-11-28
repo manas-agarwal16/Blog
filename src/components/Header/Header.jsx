@@ -1,6 +1,6 @@
 import { LogoutBtn, Container } from "../index";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Logo from "../Logo";
 

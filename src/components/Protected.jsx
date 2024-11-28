@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { authService } from '../appwrite/index';
+
 const Protected = ({chidren} , authentication) => {
     const authStatus = useSelector(state => state.auth.loginStatus);
     const navigate = useNavigate();

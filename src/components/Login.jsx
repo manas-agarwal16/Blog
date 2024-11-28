@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Logo from "./Logo";
-import { login as authLogin, authService } from "../appwrite/index.js";
+import { login as authLogin, authServices } from "../appwrite/index.js";
 import { login } from "../store/slices/authSlice.js";
 import { Input } from "./Input.jsx";
 import {Link , useNavigate} from "react-router-dom";
@@ -17,9 +17,9 @@ const Login = () => {
 
     const login = async (data) =>{
         try {
-            const session = await authService.login(data);
+            const session = await authServices.login(data);
             if(session){
-                const userData = await authService.currentUser();
+                const userData = await authServices.currentUser();
                 dispatch(login(userData));
                 navigate("/");
             }

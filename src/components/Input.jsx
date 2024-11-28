@@ -10,7 +10,7 @@ function Input({
     return (
         <>
         {label ? (<label htmlFor={id} className='p-2 mx-2 my-2'>{label}</label>) : null}
-        <input ref={ref} id={id} type={type} className={`${className} p-2 m-2`} {...props} />
+        <input ref={ref} id={id} type={type} className={`${className} w-full p-2 m-2`} {...props} />
         </>
     )
 }
