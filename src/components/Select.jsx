@@ -7,14 +7,14 @@ function Select({
     name = "",
     className = "",
     options,
-    value="",
+    labelClass="",
     ...props
 } , ref) {
     const id = useId();
     return (
         <div className='w-full'>
-            {label && <label htmlFor={id} className="p-2 mx-2 w-full" >{label}</label>}
-            <select ref={ref} value={value} className={`${className}`} {...props} name={name} id={id}>
+            {label && <label htmlFor={id} className={` ${labelClass} w-full inline-block`} >{label}</label>}
+            <select ref={ref} className={`${className} rounded-lg p-1`} {...props} name={name} id={id}>
                 {options.map(option =>
                     <option key={option} value={option} >{option}</option>
                 )}

@@ -20,8 +20,8 @@ function Header() {
       active: loginStatus,
     },
     {
-      name: "Add Posts",
-      endPoint: "/add-posts",
+      name: "Add Post",
+      endPoint: "/add-post",
       active: loginStatus,
     },
     {
@@ -31,14 +31,14 @@ function Header() {
     },
     {
       name: "Sign Up",
-      endPoint: "/sign-up",
+      endPoint: "/signup",
       active: !loginStatus,
     },
   ];
 
   return (
     <>
-      <header className="px-7 py-4 text-black bg-gray-500 flex justify-end items-center">
+      <header className="px-7 py-4 text-black bg-gray-400 flex justify-end items-center">
         <Link to="/">
           <Logo width="70px"></Logo>
         </Link>

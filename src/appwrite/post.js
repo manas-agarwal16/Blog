@@ -14,10 +14,21 @@ class PostService {
     this.databases = new Databases(this.client);
   }
 
-  async addPost({ userId, title, slug, content, file, status }) {
-    const fileURL = this.uploadFile(file).URL;
-    console.log("fileURL : ", fileURL);
+  getFileURL(fileId){
+    const fileURL = `${conf.appwriteEndPoint}/storage/buckets/${conf.bucketId}/files/${fileId}/view?project=${conf.projectId}`
+    return fileURL;
+  }
 
+  async addPost({ userId, title, slug, content, file, status }) {
+    console.log("file : " , file);
+    
+    const fileDetails = await this.uploadFile(file);
+
+    const fileURL = this.getFileURL(fileDetails.$id);
+
+    console.log("fileDetials : ", fileDetails);
+    console.log("fileURL : ", fileURL);
+    
     try {
       const userPost = await this.databases.createDocument(
         conf.databaseId,
@@ -34,7 +45,7 @@ class PostService {
       return userPost;
     } catch (error) {
       console.log(`Error in adding post to the appwrite : ${error}`);
-      throw error;
+      alert("post with same slug already exists");
     }
   }
 
@@ -49,7 +60,7 @@ class PostService {
           {
             FileURL,
           }
-        );
+        );        
       }
       const updatedPost = await this.databases.updateDocument(
         conf.databaseId,
@@ -130,6 +141,8 @@ class PostService {
   }
 
   async uploadFile(file) {
+    console.log("file : " , file);
+    
     try {
       const response = await this.storage.createFile(
         conf.bucketId,

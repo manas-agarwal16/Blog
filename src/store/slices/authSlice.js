@@ -13,6 +13,7 @@ const authSlice = createSlice({
     login: (state, action) => {
       state.loginStatus = true;
       state.userData = action.payload.userData;
+      console.log("in authSlice.js state.userData :  " , state.userData);
     },
     logout: (state, action) => {
       state.loginStatus = false;

@@ -13,28 +13,35 @@ class AuthServices {
   }
 
   async createAccount({ name, email, password }) {
+    console.log("name : " , name);
+    let user;
     try {
-      const user = await this.account.create(
+      user = await this.account.create(
         ID.unique(),
         email,
         password,
         name
       );
+      console.log("user : " , user);
       if (user) {
-        return this.login({ email, password });
-      } else {
-        console.log("Error in creating user account");
-        return false;
+        const session = await this.login({email , password});
+        console.log("signup session : " , session);
+        return {...session , ...user};
       }
     } catch (error) {
-      console.log("Error in creating user account");
+      console.log("user : " , user);      
+      console.log("User already register try signing in");
       return false;
     }
   }
 
   async login({ email, password }) {
+    console.log("login email : " , email);
+    console.log("login password" , password);
     try {
-      return await this.account.createEmailPasswordSession(email, password);
+      const session = await this.account.createEmailPasswordSession(email, password);
+      return session;
+      
     } catch (error) {
       console.log("Error in logging in user" , error);
       return false;

@@ -13,7 +13,7 @@ const CustomEditor = ({
   return (
     <div className="w-full">
       {label ? (
-        <label htmlFor={id} className="mx-2 p-2">
+        <label htmlFor={id} className="my-2 inline-block font-semibold">
           {label}
         </label>
       ) : null}
@@ -34,6 +34,7 @@ const CustomEditor = ({
             init={{
               height: 400,
               menubar: false,
+              apiKey: '2uim0kzm98ljgk308tdfzanezonq0fi8h2j1696u9sd4qw3r',
               plugins: [
                 "advlist autolink lists link image charmap print preview anchor",
                 "searchreplace visualblocks code fullscreen",

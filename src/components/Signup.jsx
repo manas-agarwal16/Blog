@@ -2,9 +2,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { authServices } from '../appwrite/auth';
 import { Link , useNavigate } from 'react-router-dom';
-import { Input } from './Input';
+import  Input from './Input';
 import {Button, Logo} from "./index";
 import { useDispatch } from 'react-redux';
+import {login} from "../store/slices/authSlice"
 import { useRef } from 'react';
 
 const Signup = () => {
@@ -16,14 +17,16 @@ const Signup = () => {
     const signUp = async (data) => {
         console.log("signUp data : " , data);
         try {
-           const create = await authServices.createAccount(data);
-           if(create){
-            await authServices.login(data)
+           const session = await authServices.createAccount(data);
+           console.log("session comp : " , session);
+
+           if(session){
             dispatch(login(data))
             navigate("/");
            }
         } catch (error) {
             console.log("Error in signing up: " , error);
+            alert("Signup failed. Please try again."); 
         }
     }
 
@@ -45,9 +48,9 @@ const Signup = () => {
                 // ref={nameRef} u dont explicity need to pass the ref. react-hook-form automatically do that for u
                 label="Name"
                 placeholder="Enter your name"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 my-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
               />
-              {errors.name && <p className='className="text-sm text-red-500 mt-1'>name is required</p>}
+              {errors.name && <p className='text-sm text-red-500 mt-1'>name is required</p>}
             </div>
 
             {/* Email Field */}
@@ -62,7 +65,7 @@ const Signup = () => {
                 })}
                 label="Enter email"
                 placeholder="email" 
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 my-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
               />
              {errors.email && (
           <p className="text-sm text-red-500 mt-1">{errors.email.message}</p>)}
@@ -74,7 +77,7 @@ const Signup = () => {
                 {...register("password" , {required : true})}
                 label="password"
                 placeholder="password"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 my-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
               />
               {errors.password && (
                 <p className="text-sm text-red-500 mt-1">password is required</p>
@@ -82,7 +85,7 @@ const Signup = () => {
             </div>
 
             {/* Submit Button */}
-            <div className="flex justify-end">
+            <div className="text-center">
               <Button
                 type="submit"
                 text="Sign Up"
